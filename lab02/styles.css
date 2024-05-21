@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.container {
+    padding: 20px;
+    background-color: antiquewhite;
+}
+.section {
+    margin-bottom: 40px;
+}
+.section h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+
+
+/*Resume Styling Section*/ 
+.resume-paper {
+    
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    max-width:1200px;
+}
+
+.resume-paper h2 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.resume-paper h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+ .resume-heading {
+    border-bottom: 2px solid #333;
+}
+
+.resume-paper h4 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.four-column-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns */
+    grid-template-rows: auto; /* Rows will adjust based on content */
+    gap: 10px; /* Space between items */
+    
+    
+}
+
+
+/*End of Resume Styling Section*/
+
