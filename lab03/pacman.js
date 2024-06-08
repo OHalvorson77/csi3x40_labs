@@ -1,5 +1,5 @@
-let gameBoard = createGame(10);
-renderGame(gameBoard);
+let gameBoard;
+let max=0;
 let score = 0;
 
 
@@ -7,19 +7,48 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') {
         gameBoard = moveLeft(gameBoard);
         renderGame(gameBoard);
+        checkLevelCompletion(gameBoard);
     } else if (event.key === 'ArrowRight') {
         gameBoard = moveRight(gameBoard);
         renderGame(gameBoard);
+        checkLevelCompletion(gameBoard);
     }
 });
 
 setInterval(() => {
     gameBoard = moveGhost(gameBoard);
+    renderGame(gameBoard);
 }, 2000);
+
+function startGame() {
+    const input = document.getElementById('boardSize').value;
+    const boardSize = parseInt(input, 10);
+    if (isNaN(boardSize) || boardSize <= 0) {
+        alert('Please enter a valid positive number.');
+        return;
+    }
+    const input2 = document.getElementById('maxScore').value;
+    const maxScore = parseInt(input2, 10);
+    if (isNaN(maxScore) || maxScore <= 0) {
+        alert('Please enter a valid positive number.');
+        return;
+    }
+    max=maxScore;
+    score = 0;
+    updateScore();
+    gameBoard = createGame(boardSize);
+    renderGame(gameBoard);
+    clearInterval(ghostInterval);
+    ghostInterval = setInterval(() => {
+        gameBoard = moveGhost(gameBoard);
+    }, 2000);
+}
+
 
 
 
 //My functions
+
 function createGame(n) {
     const board = new Array(n).fill('.');
     const pacmanPos = Math.floor(Math.random() * n);
@@ -51,8 +80,38 @@ function renderGame(board) {
 function moveLeft(board) {
     const pacmanIndex = board.indexOf('C');
     if (pacmanIndex > 0) {
-        board[pacmanIndex] = '';
+        if (board[pacmanIndex-1]=='^'){
+            alert('Game Over! The ghost caught Pacman.');
+            gameBoard = createGame(10);
+            score = 0;
+            updateScore();
+            renderGame(gameBoard);
+            return;
+
+        }
+        if (board[pacmanIndex-1]=='.'){
+            score++;
+            updateScore();
+        }
+        board[pacmanIndex] = '_';
         board[pacmanIndex - 1] = 'C';
+    }
+    else{
+        if (board[board.length-1]=='^'){
+            alert('Game Over! The ghost caught Pacman.');
+            gameBoard = createGame(10);
+            score = 0;
+            updateScore();
+            renderGame(gameBoard);
+            return;
+
+        }
+        if (board[board.length-1]=='.'){
+            score++;
+            updateScore();
+        }
+        board[board.length-1]='C';
+        board[0]='_';
     }
     return board;
 }
@@ -60,22 +119,42 @@ function moveLeft(board) {
 function moveRight(board) {
     const pacmanIndex = board.indexOf('C');
     if (pacmanIndex < board.length - 1) {
-        board[pacmanIndex] = ' ';
+        if (board[pacmanIndex+1]=='^'){
+            alert('Game Over! The ghost caught Pacman.');
+            gameBoard = createGame(10);
+            score = 0;
+            updateScore();
+            renderGame(gameBoard);
+            return;
+
+        }
+        if (board[pacmanIndex+1]=='.'){
+            score++;
+            updateScore();
+        }
+        board[pacmanIndex] = '_';
         board[pacmanIndex + 1] = 'C';
+    }
+    else{
+        if (board[0]=='^'){
+            alert('Game Over! The ghost caught Pacman.');
+            gameBoard = createGame(10);
+            score = 0;
+            updateScore();
+            renderGame(gameBoard);
+            return;
+
+        }
+        if (board[board.length-1]=='.'){
+            score++;
+            updateScore();
+        }
+        board[0]='C';
+        board[board.length-1]='_';
     }
     return board;
 }
 
-
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-        gameBoard = moveLeft(gameBoard);
-        renderGame(gameBoard);
-    } else if (event.key === 'ArrowRight') {
-        gameBoard = moveRight(gameBoard);
-        renderGame(gameBoard);
-    }
-});
 
 
 
@@ -85,7 +164,7 @@ function updateScore() {
 
 
 function isLevelComplete(board) {
-    return !board.includes('.');
+    return score>=max;
 }
 
 function checkLevelCompletion(board) {
@@ -119,7 +198,7 @@ function moveGhost(board) {
         board[newGhostIndex] = '^';
     }
 
-    renderGame(board);
+    return board;
 }
 
 

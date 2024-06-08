@@ -1,0 +1,1 @@
+This is my submission for lab 3 pacman. The game starts with the option to pick your max score to play to along with board size and then start game. The game ends with an alert if you either hit the max score or run into the ghost that moves randomly once every two seconds. The ghost also drops more pellets.
